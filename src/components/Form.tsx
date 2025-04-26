@@ -41,6 +41,7 @@ const Form: React.FC<FormProps> = ({ inputs, submitRoute, onSubmitSuccess, onSub
           }
         }
       );
+      console.log(response);
       if (onSubmitSuccess) {
         onSubmitSuccess();
       }
