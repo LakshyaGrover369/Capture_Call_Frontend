@@ -20,6 +20,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
+          <Route path="/" element={<SignUp />} />
           <Route path="/authentication">
             <Route path="signup" element={<SignUp />} />
             <Route path="signin" element={<SignIn />} />
