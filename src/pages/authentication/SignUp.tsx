@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const SignUp = () => {
@@ -9,34 +10,37 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
     BatchNumber: "",
-    role: "user" 
+    role: "user",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', formData);
-      
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/register`,
+        formData
+      );
+
       if (response.status === 201) {
-        alert('Registration successful!');
-        window.location.href = '/authentication/signin';
+        alert("Registration successful!");
+        window.location.href = "/authentication/signin";
       } else {
-        alert(response.data.message || 'Registration failed');
+        alert(response.data.message || "Registration failed");
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       if (axios.isAxiosError(error)) {
-        alert(error.response?.data.message || 'Registration failed');
+        alert(error.response?.data.message || "Registration failed");
       } else {
-        alert('Registration failed');
+        alert("Registration failed");
       }
     }
   };
@@ -47,43 +51,43 @@ const SignUp = () => {
       label: "Full Name",
       type: "text",
       required: true,
-      placeholder: "Enter your full name"
+      placeholder: "Enter your full name",
     },
     {
       name: "email",
       label: "Email Address",
       type: "email",
       required: true,
-      placeholder: "Enter your email"
+      placeholder: "Enter your email",
     },
     {
       name: "phoneNumber",
       label: "Phone Number",
       type: "tel",
       required: true,
-      placeholder: "Enter your phone number"
+      placeholder: "Enter your phone number",
     },
     {
       name: "password",
       label: "Password",
       type: "password",
       required: true,
-      placeholder: "Create a password"
+      placeholder: "Create a password",
     },
     {
       name: "confirmPassword",
       label: "Confirm Password",
       type: "password",
       required: true,
-      placeholder: "Confirm your password"
+      placeholder: "Confirm your password",
     },
     {
       name: "BatchNumber",
       label: "Batch Number",
       type: "text",
       required: true,
-      placeholder: "Enter batch number"
-    }
+      placeholder: "Enter batch number",
+    },
   ];
 
   return (
@@ -100,7 +104,7 @@ const SignUp = () => {
                 type={input.type}
                 name={input.name}
                 placeholder={input.placeholder}
-                value={formData[input.name as keyof typeof formData] || ''}
+                value={formData[input.name as keyof typeof formData] || ""}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-[var(--danger)]"
               />
@@ -114,9 +118,12 @@ const SignUp = () => {
           </form>
           <p className="text-sm text-center text-gray-600">
             Already have an account?{" "}
-            <a href="/" className="text-[var(--primary-color)] font-semibold">
+            <Link
+              to="/authentication/signin"
+              className="text-[var(--primary-color)] font-semibold"
+            >
               Login
-            </a>
+            </Link>
           </p>
         </div>
       </div>

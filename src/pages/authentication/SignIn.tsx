@@ -1,39 +1,44 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', formData);
-      
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/login`,
+        formData
+      );
+
       if (response.data.success) {
         // Store token and user data in localStorage
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         // Redirect based on role
         const role = response.data.user.role;
-        window.location.href = role === 'admin' ? '/admin/dashboard' : '/user/dashboard';
+        window.location.href =
+          role === "admin" ? "/admin/dashboard" : "/user/dashboard";
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       if (axios.isAxiosError(error)) {
-        alert(error.response?.data.message || 'Login failed');
+        alert(error.response?.data.message || "Login failed");
       } else {
-        alert('Login failed');
+        alert("Login failed");
       }
     }
   };
@@ -70,9 +75,12 @@ const SignIn = () => {
         </form>
         <p className="text-sm text-center text-gray-600">
           Don't have an account?{" "}
-          <a href="/authentication/signup" className="text-[var(--primary-color)] font-semibold">
+          <Link
+            to="/authentication/signup"
+            className="text-[var(--primary-color)] font-semibold"
+          >
             Sign Up
-          </a>
+          </Link>
         </p>
       </div>
     </div>
