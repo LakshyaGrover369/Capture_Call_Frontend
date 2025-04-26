@@ -114,7 +114,7 @@ const SignUp = () => {
           </form>
           <p className="text-sm text-center text-gray-600">
             Already have an account?{" "}
-            <a href="#" className="text-[var(--primary-color)] font-semibold">
+            <a href="/" className="text-[var(--primary-color)] font-semibold">
               Login
             </a>
           </p>
