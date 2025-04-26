@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import Table from '../../components/Table';
-import axios from 'axios';
+
 
 interface Prospect {
   id: string;

@@ -1,5 +1,4 @@
-import React from "react";
-import calling from "../assets/Gifs/calling.gif";
+
 
 const Footer = () => {
   return (

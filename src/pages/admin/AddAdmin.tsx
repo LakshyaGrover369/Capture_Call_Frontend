@@ -1,8 +1,6 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Form from '../../components/Form';
 import SubHeading from '../../components/SubHeading';
-import axios from 'axios';
 
 const AddAdmin = () => {
   const navigate = useNavigate();
