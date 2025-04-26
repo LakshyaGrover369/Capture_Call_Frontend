@@ -1,0 +1,93 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+
+interface InputField {
+  name: string;
+  label: string;
+  type: string;
+  required?: boolean;
+  placeholder?: string;
+}
+
+interface FormProps {
+  inputs: InputField[];
+  submitRoute: string;
+  onSubmitSuccess?: () => void;
+  onSubmitError?: (error: any) => void;
+}
+
+const Form: React.FC<FormProps> = ({ inputs, submitRoute, onSubmitSuccess, onSubmitError }) => {
+  const [formData, setFormData] = useState<{[key: string]: string}>({});
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      debugger;
+      const token = localStorage.getItem('token'); // Replace 'jwtToken' with your actual key
+      const response = await axios.post(
+        submitRoute,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
+      }
+      setFormData({});
+    } catch (error) {
+      if (onSubmitError) {
+        onSubmitError(error);
+      }
+      console.error('Form submission error:', error);
+    }
+  };
+  
+
+  return (
+    <div className="w-full max-w-md mx-auto">
+      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        {inputs.map((input) => (
+          <div key={input.name} className="mb-4">
+            <label 
+              className="block text-gray-700 text-sm font-bold mb-2" 
+              htmlFor={input.name}
+            >
+              {input.label}
+            </label>
+            <input
+              type={input.type}
+              name={input.name}
+              id={input.name}
+              value={formData[input.name] || ''}
+              onChange={handleChange}
+              required={input.required}
+              placeholder={input.placeholder}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+        ))}
+        <div className="flex items-center justify-center">
+          <button
+            type="submit"
+            className="bg-[var(--primary-color)] hover:bg-[var(--Btn-hover)] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default Form;
