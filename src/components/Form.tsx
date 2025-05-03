@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 interface InputField {
   name: string;
@@ -7,6 +7,7 @@ interface InputField {
   type: string;
   required?: boolean;
   placeholder?: string;
+  options?: string[]; // Add options for dropdown
 }
 
 interface FormProps {
@@ -16,31 +17,47 @@ interface FormProps {
   onSubmitError?: (error: any) => void;
 }
 
-const Form: React.FC<FormProps> = ({ inputs, submitRoute, onSubmitSuccess, onSubmitError }) => {
-  const [formData, setFormData] = useState<{[key: string]: string}>({});
+const Form: React.FC<FormProps> = ({
+  inputs,
+  submitRoute,
+  onSubmitSuccess,
+  onSubmitError,
+}) => {
+  const [formData, setFormData] = useState<{ [key: string]: string }>({});
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      debugger;
-      const token = localStorage.getItem('token'); // Replace 'jwtToken' with your actual key
-      const response = await axios.post(
-        submitRoute,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
+      const token = localStorage.getItem("token"); // Replace 'jwtToken' with your actual key
+
+      // Create a FormData object to handle multipart/form-data
+      const formDataToSend = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataToSend.append(key, value);
+      });
+
+      // Ensure the Photo key is included in the request
+      if (formData["Photo"]) {
+        formDataToSend.append("Photo", formData["Photo"]);
+      }
+
+      const response = await axios.post(submitRoute, formDataToSend, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       console.log(response);
       if (onSubmitSuccess) {
         onSubmitSuccess();
@@ -50,32 +67,54 @@ const Form: React.FC<FormProps> = ({ inputs, submitRoute, onSubmitSuccess, onSub
       if (onSubmitError) {
         onSubmitError(error);
       }
-      console.error('Form submission error:', error);
+      console.error("Form submission error:", error);
     }
   };
-  
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      >
         {inputs.map((input) => (
           <div key={input.name} className="mb-4">
-            <label 
-              className="block text-gray-700 text-sm font-bold mb-2" 
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor={input.name}
             >
               {input.label}
             </label>
-            <input
-              type={input.type}
-              name={input.name}
-              id={input.name}
-              value={formData[input.name] || ''}
-              onChange={handleChange}
-              required={input.required}
-              placeholder={input.placeholder}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
+            {input.options ? (
+              <select
+                name={input.name}
+                id={input.name}
+                value={formData[input.name] || ""}
+                onChange={handleChange}
+                required={input.required}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                <option className="" value="" disabled>
+                  {input.placeholder || "Select an option"}
+                </option>
+                {input.options.map((option) => (
+                  <option key={option} value={option} className="w-full">
+                    {option}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type={input.type}
+                name={input.name}
+                id={input.name}
+                value={formData[input.name] || ""}
+                onChange={handleChange}
+                required={input.required}
+                placeholder={input.placeholder}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            )}
           </div>
         ))}
         <div className="flex items-center justify-center">
