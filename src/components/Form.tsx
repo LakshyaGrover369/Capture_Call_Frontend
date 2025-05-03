@@ -48,7 +48,6 @@ const Form: React.FC<FormProps> = ({
       const response = await axios.post(submitRoute, formDataToSend, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
         },
       });
 
