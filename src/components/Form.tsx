@@ -7,7 +7,7 @@ interface InputField {
   type: string;
   required?: boolean;
   placeholder?: string;
-  options?: string[]; // Add options for dropdown
+  options?: string[]; // For dropdowns
 }
 
 interface FormProps {
@@ -23,33 +23,27 @@ const Form: React.FC<FormProps> = ({
   onSubmitSuccess,
   onSubmitError,
 }) => {
-  const [formData, setFormData] = useState<{ [key: string]: string }>({});
+  const [formData, setFormData] = useState<{ [key: string]: any }>({});
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target;
+    const { name, value, files, type } = e.target as HTMLInputElement;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === "file" ? files?.[0] : value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem("token"); // Replace 'jwtToken' with your actual key
+      const token = localStorage.getItem("token");
 
-      // Create a FormData object to handle multipart/form-data
       const formDataToSend = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
         formDataToSend.append(key, value);
       });
-
-      // Ensure the Photo key is included in the request
-      if (formData["Photo"]) {
-        formDataToSend.append("Photo", formData["Photo"]);
-      }
 
       const response = await axios.post(submitRoute, formDataToSend, {
         headers: {
@@ -58,15 +52,11 @@ const Form: React.FC<FormProps> = ({
         },
       });
 
-      console.log(response);
-      if (onSubmitSuccess) {
-        onSubmitSuccess();
-      }
+      console.log(response.data);
+      if (onSubmitSuccess) onSubmitSuccess();
       setFormData({});
     } catch (error) {
-      if (onSubmitError) {
-        onSubmitError(error);
-      }
+      if (onSubmitError) onSubmitError(error);
       console.error("Form submission error:", error);
     }
   };
@@ -75,16 +65,18 @@ const Form: React.FC<FormProps> = ({
     <div className="w-full max-w-md mx-auto">
       <form
         onSubmit={handleSubmit}
+        encType="multipart/form-data"
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
       >
         {inputs.map((input) => (
           <div key={input.name} className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor={input.name}
+              className="block text-gray-700 text-sm font-bold mb-2"
             >
               {input.label}
             </label>
+
             {input.options ? (
               <select
                 name={input.name}
@@ -94,11 +86,11 @@ const Form: React.FC<FormProps> = ({
                 required={input.required}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
-                <option className="" value="" disabled>
+                <option value="" disabled>
                   {input.placeholder || "Select an option"}
                 </option>
                 {input.options.map((option) => (
-                  <option key={option} value={option} className="w-full">
+                  <option key={option} value={option}>
                     {option}
                   </option>
                 ))}
@@ -108,7 +100,9 @@ const Form: React.FC<FormProps> = ({
                 type={input.type}
                 name={input.name}
                 id={input.name}
-                value={formData[input.name] || ""}
+                value={
+                  input.type === "file" ? undefined : formData[input.name] || ""
+                }
                 onChange={handleChange}
                 required={input.required}
                 placeholder={input.placeholder}
@@ -117,6 +111,7 @@ const Form: React.FC<FormProps> = ({
             )}
           </div>
         ))}
+
         <div className="flex items-center justify-center">
           <button
             type="submit"

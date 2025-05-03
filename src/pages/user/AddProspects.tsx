@@ -1,9 +1,6 @@
-import { useState } from "react";
 import Form from "../../components/Form";
 
 const AddProspects = () => {
-  // const [photo, setPhoto] = useState<File | null>(null);
-
   const formInputs = [
     {
       name: "Sewadar_Name",
