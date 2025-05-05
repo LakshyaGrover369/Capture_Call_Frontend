@@ -48,7 +48,9 @@ const Form: React.FC<FormProps> = ({
       const response = await axios.post(submitRoute, formDataToSend, {
         headers: {
           Authorization: `Bearer ${token}`,
+          // DO NOT manually set Content-Type for FormData
         },
+        withCredentials: true, // 🔥 Needed for CORS when sending cookies or auth
       });
 
       console.log(response.data);
