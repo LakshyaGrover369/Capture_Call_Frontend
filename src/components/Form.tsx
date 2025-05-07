@@ -44,7 +44,7 @@ const Form: React.FC<FormProps> = ({
       Object.entries(formData).forEach(([key, value]) => {
         formDataToSend.append(key, value);
       });
-
+      console.log("Form data to send:", formDataToSend); // Debugging line
       const response = await axios.post(submitRoute, formDataToSend, {
         headers: {
           Authorization: `Bearer ${token}`,
