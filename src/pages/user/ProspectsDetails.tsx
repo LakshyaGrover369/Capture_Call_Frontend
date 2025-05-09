@@ -47,6 +47,7 @@ interface TableColumn {
 // };
 
 const ProspectsDetails = () => {
+  const [excelFileLink, setExcelFileLink] = useState<string>("");
   const [prospects, setProspects] = useState<Prospect[]>([]);
 
   const columns: TableColumn[] = [
@@ -139,6 +140,31 @@ const ProspectsDetails = () => {
     },
   ];
 
+  const fetchProspectsExcelLink = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/users/getAllProspectsByExcel`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.data && response.data.ExcelLink) {
+        setExcelFileLink(response.data.ExcelLink);
+        console.log("Excel file link fetched:", response.data.ExcelLink);
+        if (response.data && response.data.ExcelLink) {
+          window.open(response.data.ExcelLink, "_blank"); // Trigger download
+        }
+      } else {
+        console.error("Excel link not found in response:", response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching prospects Excel link:", error);
+    }
+  };
+
   // // Sample data
   // const sampleData: Prospect[] = [
   //   {
@@ -196,7 +222,6 @@ const ProspectsDetails = () => {
             },
           }
         );
-        debugger;
         console.log(response.data.data);
         const mappedData = response.data.data.map((item: any) => ({
           id: item._id,
@@ -234,6 +259,7 @@ const ProspectsDetails = () => {
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-6">Prospects Details</h2>
+      <button onClick={fetchProspectsExcelLink}>Download Excel</button>
       <Table columns={columns} data={prospects} searchable={true} />
     </div>
   );
