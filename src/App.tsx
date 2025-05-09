@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import UserDashboard from "./pages/user/UserDashboard";
 import UserDashboardDetails from "./pages/user/UserDashboardDetails";
-import AddProspects from "./pages/user/AddProspects";
-import AddProspectsByExcel from "./pages/user/AddProspectsByExcel";
+import AddProspects from "./pages/admin/AddProspects";
+import AddProspectsByExcel from "./pages/admin/AddProspectsByExcel";
 import NominalList from "./pages/user/NominalList";
 import ProspectsDetails from "./pages/user/ProspectsDetails";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -33,16 +33,16 @@ function App() {
             <Route path="add-admin" element={<AddAdmin />} />
             <Route path="user-details" element={<UserDetails />} />
             <Route path="admin-details" element={<AdminDetails />} />
-          </Route>
-
-          <Route path="/user" element={<UserDashboard />}>
-            <Route path="dashboard" element={<UserDashboardDetails />} />
-            <Route path="prospects-details" element={<ProspectsDetails />} />
             <Route path="add-prospects" element={<AddProspects />} />
             <Route
               path="add-prospects-excel"
               element={<AddProspectsByExcel />}
             />
+          </Route>
+
+          <Route path="/user" element={<UserDashboard />}>
+            <Route path="dashboard" element={<UserDashboardDetails />} />
+            <Route path="prospects-details" element={<ProspectsDetails />} />
             <Route path="nominal-list" element={<NominalList />} />
           </Route>
         </Routes>

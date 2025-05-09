@@ -32,7 +32,7 @@ const AddProspectsByExcel = () => {
       const token = localStorage.getItem("token");
 
       const response = await axios.post(
-        "http://localhost:5000/api/users/addProspectByExcel",
+        `${import.meta.env.VITE_API_URL}/api/admin/addProspectByExcel`,
         formData,
         {
           headers: {

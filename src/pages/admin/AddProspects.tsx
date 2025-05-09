@@ -165,7 +165,7 @@ const AddProspects = () => {
       <h2 className="text-2xl font-bold mb-6 text-center">Add New Prospect</h2>
       <Form
         inputs={formInputs}
-        submitRoute={`${import.meta.env.VITE_API_URL}/api/users/addProspect`}
+        submitRoute={`${import.meta.env.VITE_API_URL}/api/admin/addProspect`}
         onSubmitSuccess={() => alert("Prospect added successfully!")}
         onSubmitError={(error) =>
           alert("Error adding prospect: " + error.message)

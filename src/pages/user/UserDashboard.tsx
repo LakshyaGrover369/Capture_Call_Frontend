@@ -9,12 +9,6 @@ const UserDashboard = () => {
     { path: "/user/dashboard", label: "Dashboard", icon: "📊" },
     { path: "/user/prospects-details", label: "Prospects Details", icon: "👥" },
     { path: "/user/nominal-list", label: "Nominal List", icon: "📋" },
-    { path: "/user/add-prospects", label: "Add Prospects", icon: "➕" },
-    {
-      path: "/user/add-prospects-excel",
-      label: "Add Prospects By Excel",
-      icon: "➕",
-    },
   ];
 
   return (
