@@ -32,22 +32,7 @@ interface TableColumn {
   buttonAction?: string;
 }
 
-// const calculateAge = (dateOfBirth: string): number => {
-//   const birthDate = new Date(dateOfBirth);
-//   const today = new Date();
-//   let age = today.getFullYear() - birthDate.getFullYear();
-//   const monthDiff = today.getMonth() - birthDate.getMonth();
-//   if (
-//     monthDiff < 0 ||
-//     (monthDiff === 0 && today.getDate() < birthDate.getDate())
-//   ) {
-//     age--;
-//   }
-//   return age;
-// };
-
 const ProspectsDetails = () => {
-  const [excelFileLink, setExcelFileLink] = useState<string>("");
   const [prospects, setProspects] = useState<Prospect[]>([]);
 
   const columns: TableColumn[] = [
@@ -152,8 +137,6 @@ const ProspectsDetails = () => {
         }
       );
       if (response.data && response.data.ExcelLink) {
-        setExcelFileLink(response.data.ExcelLink);
-        console.log("Excel file link fetched:", response.data.ExcelLink);
         if (response.data && response.data.ExcelLink) {
           window.open(response.data.ExcelLink, "_blank"); // Trigger download
         }
