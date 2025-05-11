@@ -1,8 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
 import UserDashboard from "./pages/user/UserDashboard";
 import UserDashboardDetails from "./pages/user/UserDashboardDetails";
 import AddProspects from "./pages/admin/AddProspects";
+import EditProspectDectails from "./pages/user/EditProspectDetails";
+
 import AddProspectsByExcel from "./pages/admin/AddProspectsByExcel";
 import NominalList from "./pages/user/NominalList";
 import ProspectsDetails from "./pages/user/ProspectsDetails";
@@ -11,7 +15,7 @@ import AdminDashboardDetails from "./pages/admin/AdminDashboardDetails";
 import AddAdmin from "./pages/admin/AddAdmin";
 import AdminDetails from "./pages/admin/AdminDetails";
 import UserDetails from "./pages/admin/UserDetails";
-import Footer from "./components/Footer";
+
 import SignUp from "./pages/authentication/SignUp";
 import SignIn from "./pages/authentication/SignIn";
 
@@ -43,8 +47,13 @@ function App() {
           <Route path="/user" element={<UserDashboard />}>
             <Route path="dashboard" element={<UserDashboardDetails />} />
             <Route path="prospects-details" element={<ProspectsDetails />} />
+            <Route
+              path="edit-prospect-details/:id"
+              element={<EditProspectDectails />}
+            />
             <Route path="nominal-list" element={<NominalList />} />
           </Route>
+          <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
         <Footer />
       </BrowserRouter>

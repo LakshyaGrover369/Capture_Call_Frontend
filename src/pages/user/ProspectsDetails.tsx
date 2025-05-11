@@ -27,7 +27,7 @@ interface Prospect {
 interface TableColumn {
   header: string;
   accessor: string;
-  type?: "button" | "image";
+  type?: "button" | "image" | "buttonNavigate";
   buttonText?: string;
   buttonAction?: string;
 }
@@ -36,6 +36,10 @@ const ProspectsDetails = () => {
   const [prospects, setProspects] = useState<Prospect[]>([]);
 
   const columns: TableColumn[] = [
+    {
+      header: "id",
+      accessor: "id",
+    },
     {
       header: "Image",
       accessor: "imageUrl",
@@ -119,9 +123,9 @@ const ProspectsDetails = () => {
     {
       header: "Actions",
       accessor: "actions",
-      type: "button",
-      buttonText: "Update Status",
-      buttonAction: "/api/prospects/update-status",
+      type: "buttonNavigate",
+      buttonText: "Edit Details",
+      buttonAction: "/user/edit-prospect-details/",
     },
   ];
 
@@ -205,7 +209,7 @@ const ProspectsDetails = () => {
             },
           }
         );
-        console.log(response.data.data);
+        console.log("data -=> ", response.data.data);
         const mappedData = response.data.data.map((item: any) => ({
           id: item._id,
           age: item.AGE || "N/A",

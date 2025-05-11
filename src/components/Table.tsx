@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 interface TableColumn {
   header: string;
   accessor: string;
-  type?: "button" | "image"; // Added 'image' type
+  type?: "button" | "image" | "buttonNavigate"; // Added 'image' type
   buttonText?: string;
   buttonAction?: string; // API endpoint for button action
 }
@@ -60,6 +61,7 @@ const Table: React.FC<TableProps> = ({
           >
             {columns.map(
               (column) =>
+                column.accessor !== "id" &&
                 column.type !== "button" && (
                   <option key={column.accessor} value={column.accessor}>
                     Search by {column.header}
@@ -76,26 +78,33 @@ const Table: React.FC<TableProps> = ({
           />
         </div>
       )}
-
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300">
           <thead>
             <tr className="bg-gray-100">
-              {columns.map((column, index) => (
-                <th
-                  key={index}
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  {column.header}
-                </th>
-              ))}
+              {columns.map(
+                (column, index) =>
+                  column.accessor !== "id" && (
+                    <th
+                      key={index}
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      {column.header}
+                    </th>
+                  )
+              )}
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-300">
             {filteredData.map((row, rowIndex) => (
               <tr key={row._id || rowIndex} id={row._id?.toString()}>
                 {columns.map((column, colIndex) => (
-                  <td key={colIndex} className="px-6 py-4 whitespace-nowrap">
+                  <td
+                    key={colIndex}
+                    className={`px-6 py-4 whitespace-nowrap ${
+                      column.accessor === "id" ? "hidden" : ""
+                    }`}
+                  >
                     {column.type === "button" ? (
                       <button
                         onClick={() =>
@@ -111,6 +120,13 @@ const Table: React.FC<TableProps> = ({
                         alt={column.header}
                         className="h-16 w-16 object-cover rounded"
                       />
+                    ) : column.type === "buttonNavigate" ? (
+                      <Link
+                        to={`${column.buttonAction || ""}${row.id}`}
+                        className="bg-[var(--primary-color)] hover:bg-[var(--Btn-hover)] text-white font-bold py-2 px-4 rounded inline-block text-center"
+                      >
+                        {`${column.buttonText}` || "Action"}
+                      </Link>
                     ) : (
                       row[column.accessor]
                     )}

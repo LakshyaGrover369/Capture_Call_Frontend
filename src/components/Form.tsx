@@ -8,6 +8,7 @@ interface InputField {
   required?: boolean;
   placeholder?: string;
   options?: string[]; // For dropdowns
+  defaultValue?: any; // Optional default value
 }
 
 interface FormProps {
@@ -23,7 +24,14 @@ const Form: React.FC<FormProps> = ({
   onSubmitSuccess,
   onSubmitError,
 }) => {
-  const [formData, setFormData] = useState<{ [key: string]: any }>({});
+  const [formData, setFormData] = useState<{ [key: string]: any }>(() =>
+    inputs.reduce((acc, input) => {
+      if (input.defaultValue !== undefined) {
+        acc[input.name] = input.defaultValue;
+      }
+      return acc;
+    }, {} as { [key: string]: any })
+  );
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -31,7 +39,7 @@ const Form: React.FC<FormProps> = ({
     const { name, value, files, type } = e.target as HTMLInputElement;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "file" ? files?.[0] : value,
+      [name]: type === "file" && files ? files[0] : value,
     }));
   };
 
@@ -70,13 +78,18 @@ const Form: React.FC<FormProps> = ({
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
       >
         {inputs.map((input) => (
-          <div key={input.name} className="mb-4">
-            <label
-              htmlFor={input.name}
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              {input.label}
-            </label>
+          <div
+            key={input.name}
+            className={`mb-4 ${input.type === "hidden" ? "hidden" : ""}`}
+          >
+            {input.type !== "hidden" && (
+              <label
+                htmlFor={input.name}
+                className="block text-gray-700 text-sm font-bold mb-2"
+              >
+                {input.label}
+              </label>
+            )}
 
             {input.options ? (
               <select
@@ -109,6 +122,27 @@ const Form: React.FC<FormProps> = ({
                 placeholder={input.placeholder}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
+            )}
+
+            {input.type === "file" && formData[input.name] && (
+              <div className="mt-2">
+                Selected file:{" "}
+                {typeof formData[input.name] === "string" ? (
+                  <a
+                    href={formData[input.name]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 underline"
+                  >
+                    {formData[input.name].split("prospectsPhotos/")[1] ||
+                      formData[input.name]}
+                  </a>
+                ) : (
+                  <p className="text-sm text-gray-600">
+                    Selected file: No File Selected
+                  </p>
+                )}
+              </div>
             )}
           </div>
         ))}
