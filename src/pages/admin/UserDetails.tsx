@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Table from "../../components/Table";
 import axios from "axios";
+import CallingLoader from "../../assets/loaders/CallingLoader.gif";
 
 interface User {
   id: string;
@@ -13,6 +14,7 @@ interface User {
 
 const UserDetails = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
 
   // Define table columns with correct type annotations
   const columns: TableColumn[] = [
@@ -44,8 +46,6 @@ const UserDetails = () => {
       buttonAction: `${import.meta.env.VITE_API_URL}/api/users/delete/`,
     },
   ];
-
-  // Sample data
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -79,11 +79,21 @@ const UserDetails = () => {
         setUsers(response.data.data);
       } catch (error) {
         console.error("Error fetching users:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchUsers();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-[300px]">
+        <img src={CallingLoader} alt="Loading..." />
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">

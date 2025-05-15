@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Form from "../../components/Form";
 import axios from "axios";
+import CallingLoader from "../../assets/loaders/CallingLoader.gif";
 
 const EditProspectDetails = () => {
   const { id } = useParams<{ id: string }>(); // Get the ID from the URL
@@ -48,7 +49,22 @@ const EditProspectDetails = () => {
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "300px",
+        }}
+      >
+        <img
+          src={CallingLoader}
+          alt="Loading..."
+          style={{ width: 80, height: 80 }}
+        />
+      </div>
+    );
   }
 
   if (error) {

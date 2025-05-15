@@ -2,6 +2,7 @@ import DashboardCard from "../../components/DashboardCard";
 import PieChart from "../../components/PieChart";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import CallingLoader from "../../assets/loaders/CallingLoader.gif";
 
 const DashboardDetails = () => {
   interface DashboardData {
@@ -19,6 +20,7 @@ const DashboardDetails = () => {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(
     null
   );
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -37,11 +39,21 @@ const DashboardDetails = () => {
         }
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchDashboardData();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-[300px] w-full">
+        <img src={CallingLoader} alt="Loading..." />
+      </div>
+    );
+  }
 
   if (!dashboardData) {
     return <div>Loading...</div>;
@@ -113,31 +125,3 @@ const DashboardDetails = () => {
 };
 
 export default DashboardDetails;
-
-//   const data = [
-//     ["Task", "Hours per Day"], // Header row
-//     ["Work", 8],
-//     ["Eat", 2],
-//     ["Commute", 2],
-//     ["Watch TV", 3],
-//     ["Sleep", 9],
-//   ];
-
-//   const options = {
-//     title: "My Daily Activities",
-//     is3D: true,
-//   };
-//   return (
-//     <div>
-//       <DashboardCard
-//         title="Support Tickets"
-//         count={12}
-//         imageSrc="/icons/tickets.svg"
-//         bgColor="bg-red-500"
-//       />
-//       <PieChart data={data} options={options} />
-//     </div>
-//   );
-// };
-
-// export default DashboardDetails;

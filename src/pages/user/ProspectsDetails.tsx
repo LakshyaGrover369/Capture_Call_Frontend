@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Table from "../../components/Table";
 import axios from "axios";
+import CallingLoader from "../../assets/loaders/CallingLoader.gif";
 
 interface Prospect {
   id: string;
@@ -34,6 +35,7 @@ interface TableColumn {
 
 const ProspectsDetails = () => {
   const [prospects, setProspects] = useState<Prospect[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const columns: TableColumn[] = [
     {
@@ -152,51 +154,6 @@ const ProspectsDetails = () => {
     }
   };
 
-  // // Sample data
-  // const sampleData: Prospect[] = [
-  //   {
-  //     id: "1",
-  //     name: "John Doe",
-  //     address: "123 Main St",
-  //     phoneNumber: "1234567890",
-  //     BatchNumber: "Batch-2024",
-  //     bloodGroup: "O+",
-  //     adhaarCard: "123456789012",
-  //     dateOfBirth: "1995-05-15",
-  //     guardianName: "Jim Doe",
-  //     guardianRelation: "father",
-  //     emergencyPhone: "9876543210",
-  //     deptFinalisedByCenter: "IT",
-  //     maritalStatus: "Single",
-  //     doi: "2024-03-15",
-  //     isInitiated: false,
-  //     callResult: "selected",
-  //     callRecording: "recording1.mp3",
-  //     remarks: "Good candidate",
-  //     imageUrl: "https://via.placeholder.com/150",
-  //   },
-  //   {
-  //     id: "2",
-  //     name: "Jane Smith",
-  //     address: "456 Oak St",
-  //     phoneNumber: "9876543210",
-  //     bloodGroup: "A+",
-  //     adhaarCard: "987654321098",
-  //     dateOfBirth: "1998-08-20",
-  //     guardianName: "Robert Smith",
-  //     guardianRelation: "husband",
-  //     emergencyPhone: "1234567890",
-  //     deptFinalisedByCenter: "HR",
-  //     maritalStatus: "Married",
-  //     doi: "2024-03-10",
-  //     isInitiated: true,
-  //     callResult: "call back",
-  //     callRecording: "recording2.mp3",
-  //     remarks: "Need to discuss salary",
-  //     imageUrl: "https://via.placeholder.com/150",
-  //   },
-  // ];
-
   useEffect(() => {
     const fetchProspects = async () => {
       try {
@@ -247,11 +204,21 @@ const ProspectsDetails = () => {
         setProspects(mappedData);
       } catch (error) {
         console.error("Error fetching prospects:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchProspects();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-[300px]">
+        <img src={CallingLoader} alt="Loading..." />
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">

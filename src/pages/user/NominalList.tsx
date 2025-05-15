@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Table from "../../components/Table";
 import axios from "axios";
+import CallingLoader from "../../assets/loaders/CallingLoader.gif";
 
 interface Prospect {
   id: string;
@@ -34,6 +35,7 @@ interface TableColumn {
 
 const NominalList = () => {
   const [prospects, setProspects] = useState<Prospect[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const columns: TableColumn[] = [
     {
@@ -195,21 +197,31 @@ const NominalList = () => {
           imageUrl: item.Photo || "https://via.placeholder.com/150",
         }));
         setProspects(mappedData);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching prospects:", error);
+        setLoading(false);
       }
     };
 
     fetchProspects();
   }, []);
 
-  return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-6">Nominal List</h2>
-      <button onClick={fetchProspectsExcelLink}>Download Excel</button>
-      <Table columns={columns} data={prospects} searchable={true} />
-    </div>
-  );
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-[300px]">
+        <img src={CallingLoader} alt="Loading..." />
+      </div>
+    );
+  } else {
+    return (
+      <div className="p-4">
+        <h2 className="text-2xl font-bold mb-6">Nominal List</h2>
+        <button onClick={fetchProspectsExcelLink}>Download Excel</button>
+        <Table columns={columns} data={prospects} searchable={true} />
+      </div>
+    );
+  }
 };
 
 export default NominalList;

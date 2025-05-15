@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Table from "../../components/Table";
 import axios from "axios";
+import CallingLoader from "../../assets/loaders/CallingLoader.gif";
 
 interface Admin {
   name: string;
@@ -21,6 +22,7 @@ interface TableColumn {
 
 const AdminDetails = () => {
   const [admins, setAdmins] = useState<Admin[]>([]);
+  const [loading, setLoading] = useState(true);
 
   // Define table columns for admin view
   const columns: TableColumn[] = [
@@ -84,14 +86,24 @@ const AdminDetails = () => {
           lastLogin: formatDateTime(admin.lastLogin),
         }));
         setAdmins(formattedAdmins);
+        setLoading(false);
         console.log(response.data.data);
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching admins:", error);
       }
     };
 
     fetchAdmins();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-[300px]">
+        <img src={CallingLoader} alt="Loading..." />
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">
