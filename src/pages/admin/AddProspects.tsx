@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Form from "../../components/Form";
 
 const AddProspects = () => {
@@ -134,6 +135,8 @@ const AddProspects = () => {
     },
   ];
 
+  const navigate = useNavigate();
+
   // const handleSubmit = async (formData: any) => {
   //   try {
   //     const data = new FormData();
@@ -166,7 +169,10 @@ const AddProspects = () => {
       <Form
         inputs={formInputs}
         submitRoute={`${import.meta.env.VITE_API_URL}/api/admin/addProspect`}
-        onSubmitSuccess={() => alert("Prospect added successfully!")}
+        onSubmitSuccess={() => {
+          alert("Prospect added successfully!");
+          navigate("/user/prospects-details");
+        }}
         onSubmitError={(error) =>
           alert("Error adding prospect: " + error.message)
         }

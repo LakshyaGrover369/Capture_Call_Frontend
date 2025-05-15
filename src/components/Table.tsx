@@ -62,6 +62,7 @@ const Table: React.FC<TableProps> = ({
             {columns.map(
               (column) =>
                 column.accessor !== "id" &&
+                column.type !== "image" &&
                 column.type !== "button" && (
                   <option key={column.accessor} value={column.accessor}>
                     Search by {column.header}

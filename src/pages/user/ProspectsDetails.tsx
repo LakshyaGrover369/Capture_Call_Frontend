@@ -210,6 +210,16 @@ const ProspectsDetails = () => {
           }
         );
         console.log("data -=> ", response.data.data);
+        const formatDateTime = (dateString: string) => {
+          if (!dateString) return "N/A";
+          const date = new Date(dateString);
+          if (isNaN(date.getTime())) return "N/A";
+          const day = String(date.getDate()).padStart(2, "0");
+          const month = String(date.getMonth() + 1).padStart(2, "0");
+          const year = date.getFullYear();
+          return `${day}/${month}/${year}`;
+        };
+
         const mappedData = response.data.data.map((item: any) => ({
           id: item._id,
           age: item.AGE || "N/A",
@@ -219,13 +229,13 @@ const ProspectsDetails = () => {
           BatchNumber: item.Badge || "N/A",
           bloodGroup: item.Blood_Group || "N/A",
           adhaarCard: item.AADHAAR || "N/A",
-          dateOfBirth: item.DOB || "N/A",
+          dateOfBirth: formatDateTime(item.DOB),
           guardianName: item.Father_Husband_Name || "N/A",
           guardianRelation: item.Gender === "Male" ? "father" : "husband",
           emergencyPhone: item.Emergency_Contact || "N/A",
           deptFinalisedByCenter: item.DEPT_FINALISED_BY_CENTER || "N/A",
           maritalStatus: item.Marital_Status || "N/A",
-          doi: item.DOI || "N/A",
+          doi: formatDateTime(item.DOI),
           isInitiated: (item.Is_Initiated || false) === true ? "Yes" : "No",
           callResult: item.Call_Result || "N/A",
           callRecording: item.Call_Recording || "N/A",
