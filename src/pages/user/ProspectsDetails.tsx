@@ -112,13 +112,6 @@ const ProspectsDetails = () => {
       accessor: "callResult",
     },
     {
-      header: "Call Recording",
-      accessor: "callRecording",
-      type: "button",
-      buttonText: "Play Recording",
-      buttonAction: "/api/prospects/play-recording",
-    },
-    {
       header: "Remarks",
       accessor: "remarks",
     },
