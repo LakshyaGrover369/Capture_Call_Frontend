@@ -9,6 +9,13 @@
   --Btn-color: rgb(33, 188, 255); /* Primary buttons */
   --Btn-hover: rgb(25, 160, 230); /* Slightly deeper hover */
 }
+/* Add to your CSS: */
+@keyframes particleAnimation {
+  to {
+    transform: translate(var(--tx, 0), var(--ty, -50px));
+    opacity: 0;
+  }
+}
 
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

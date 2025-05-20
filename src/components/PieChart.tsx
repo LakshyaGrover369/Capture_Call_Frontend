@@ -30,7 +30,7 @@ const PieChart: React.FC<PieChartProps> = ({
   };
 
   return (
-    <div className="bg-white shadow-xl rounded-2xl p-4 w-full max-w-[500px] m-auto">
+    <div className="bg-white rounded-2xl p-4 w-full max-w-[500px] m-auto">
       <Chart
         chartType="PieChart"
         data={data}

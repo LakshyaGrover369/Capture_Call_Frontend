@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Table from "../../components/Table";
 import axios from "axios";
 import CallingLoader from "../../assets/loaders/CallingLoader.gif";
+import SubHeading from "../../components/SubHeading";
+import DownloadButton from "../../components/DownloadButton";
 
 interface Prospect {
   id: string;
@@ -214,9 +216,11 @@ const ProspectsDetails = () => {
   }
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-6">Prospects Details</h2>
-      <button onClick={fetchProspectsExcelLink}>Download Excel</button>
+    <div className="p-6 bg-white rounded-xl shadow-md border border-gray-100">
+      <div className="flex justify-between items-center mb-6">
+        <SubHeading text="Prospects Details" align="left" />
+        <DownloadButton onClick={fetchProspectsExcelLink} />
+      </div>
       <Table columns={columns} data={prospects} searchable={true} />
     </div>
   );
