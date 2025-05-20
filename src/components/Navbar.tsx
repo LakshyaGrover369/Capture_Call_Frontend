@@ -68,7 +68,7 @@ const Navbar = () => {
             <li key={idx}>
               <Link
                 to={link.to}
-                className="block py-2 px-3 rounded hover:bg-indigo-100 md:hover:bg-transparent hover:text-indigo-600 transition duration-200"
+                className="block py-2 px-3 rounded hover:bg-blue-100 md:hover:bg-transparent hover:text-blue-600 transition duration-200"
               >
                 {link.name}
               </Link>

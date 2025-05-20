@@ -53,9 +53,9 @@ const Table: React.FC<TableProps> = ({
   return (
     <div className="w-full">
       {searchable && (
-        <div className="mb-4 flex gap-4">
+        <div className="mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
           <select
-            className="p-2 border rounded"
+            className="p-2 border border-gray-300 rounded-lg shadow-sm text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={searchColumn}
             onChange={(e) => setSearchColumn(e.target.value)}
           >
@@ -72,23 +72,24 @@ const Table: React.FC<TableProps> = ({
           </select>
           <input
             type="text"
-            placeholder="Search..."
-            className="p-2 border rounded"
+            placeholder="Type to search..."
+            className="p-2 border border-gray-300 rounded-lg shadow-sm text-sm w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
           />
         </div>
       )}
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300">
-          <thead>
-            <tr className="bg-gray-100">
+
+      <div className="overflow-x-auto rounded-lg shadow-md">
+        <table className="min-w-full divide-y divide-gray-200 bg-white">
+          <thead className="bg-gradient-to-r from-blue-600 to-blue-500 text-white">
+            <tr>
               {columns.map(
                 (column, index) =>
                   column.accessor !== "id" && (
                     <th
                       key={index}
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-semibold tracking-wider"
                     >
                       {column.header}
                     </th>
@@ -96,13 +97,17 @@ const Table: React.FC<TableProps> = ({
               )}
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-300">
+          <tbody className="bg-white divide-y divide-gray-100">
             {filteredData.map((row, rowIndex) => (
-              <tr key={row._id || rowIndex} id={row._id?.toString()}>
+              <tr
+                key={row._id || rowIndex}
+                className="hover:bg-blue-50 transition-all duration-200"
+                id={row._id?.toString()}
+              >
                 {columns.map((column, colIndex) => (
                   <td
                     key={colIndex}
-                    className={`px-6 py-4 whitespace-nowrap ${
+                    className={`px-6 py-4 whitespace-nowrap text-sm text-gray-700 ${
                       column.accessor === "id" ? "hidden" : ""
                     }`}
                   >
@@ -111,7 +116,7 @@ const Table: React.FC<TableProps> = ({
                         onClick={() =>
                           handleButtonClick(column.buttonAction || "", row)
                         }
-                        className="bg-[var(--primary-color)] hover:bg-[var(--Btn-hover)] text-white font-bold py-2 px-4 rounded"
+                        className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1.5 px-4 rounded-lg shadow-sm transition-colors duration-200"
                       >
                         {column.buttonText || "Action"}
                       </button>
@@ -119,12 +124,12 @@ const Table: React.FC<TableProps> = ({
                       <img
                         src={row[column.accessor]}
                         alt={column.header}
-                        className="h-16 w-16 object-cover rounded"
+                        className="h-10 w-10 object-cover rounded-full border border-gray-300"
                       />
                     ) : column.type === "buttonNavigate" ? (
                       <Link
                         to={`${column.buttonAction || ""}${row.id}`}
-                        className="bg-[var(--primary-color)] hover:bg-[var(--Btn-hover)] text-white font-bold py-2 px-4 rounded inline-block text-center"
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1.5 px-4 rounded-lg shadow-sm transition-colors duration-200 inline-block text-center"
                       >
                         {`${column.buttonText}` || "Action"}
                       </Link>
