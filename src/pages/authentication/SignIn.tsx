@@ -27,7 +27,13 @@ const SignIn = () => {
       if (response.data.success) {
         // Store token and user data in localStorage
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+        const authInfo = {
+          isAuthenticated: true,
+          token: response.data.token,
+          user: response.data.user,
+          role: response.data.user.role,
+        };
+        localStorage.setItem("authInfo", JSON.stringify(authInfo));
         // Redirect based on role
         const role = response.data.user.role;
         window.location.href =

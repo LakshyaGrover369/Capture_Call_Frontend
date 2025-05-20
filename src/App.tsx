@@ -25,6 +25,17 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
+          <Route
+            path="/home"
+            element={
+              <h2 className="text-center mt-10">Welcome to Home Page</h2>
+            }
+          />
+          <Route
+            path="/about"
+            element={<h2 className="text-center mt-10">About Us</h2>}
+          />
+
           <Route path="/" element={<SignIn />} />
           <Route path="/authentication">
             <Route path="signin" element={<SignIn />} />

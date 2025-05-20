@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --primary-color: darkred;
-  --secondary-color: #e7e9eb;
-  --success: #28a745;
-  --danger: red;
-  --warning: #ffce3a;
-  --Btn-color: rgb(143, 0, 0);
-  --Btn-hover: rgb(187, 0, 0);
+  --primary-color: rgb(33, 188, 255); /* Sidebar background + active text */
+  --secondary-color: #f3f4f6; /* Main content background */
+  --success: #28a745; /* Success color */
+  --danger: #dc3545; /* Bootstrap red */
+  --warning: #3acaff; /* Light teal blue */
+  --Btn-color: rgb(33, 188, 255); /* Primary buttons */
+  --Btn-hover: rgb(25, 160, 230); /* Slightly deeper hover */
 }
 
 /* :root {

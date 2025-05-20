@@ -1,67 +1,82 @@
-import  { useEffect } from "react";
-import { Link } from "react-router-dom";
-import $ from "jquery";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
-  useEffect(() => {
-    $("#menu-button").on("click", function () {
-      $("#menu").toggleClass("hidden");
-    });
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [auth, setAuth] = useState({
+    isAuthenticated: false,
+    role: "guest",
+  });
 
-    return () => {
-      $("#menu-button").off("click");
-    };
-  }, []);
+  const location = useLocation();
+
+  useEffect(() => {
+    const authInfo = localStorage.getItem("authInfo");
+    const storedAuth = authInfo ? JSON.parse(authInfo) : null;
+    if (storedAuth?.isAuthenticated) {
+      setAuth(storedAuth);
+    } else {
+      setAuth({ isAuthenticated: false, role: "guest" });
+    }
+    setIsMenuOpen(false); // close on route change
+  }, [location]);
+
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+
+  const commonLinks = [
+    { name: "Home", to: "/home" },
+    { name: "About", to: "/about" },
+  ];
+
+  const guestLinks = [
+    { name: "Sign In", to: "/authentication/signin" },
+    { name: "Sign Up", to: "/authentication/signup" },
+  ];
+
+  const userLinks = [{ name: "User Dashboard", to: "/user/dashboard" }];
+
+  const adminLinks = [
+    { name: "Admin Dashboard", to: "/admin/dashboard" },
+    { name: "User Dashboard", to: "/user/dashboard" },
+  ];
+
+  let navLinks = [...commonLinks];
+  if (!auth.isAuthenticated) {
+    navLinks = [...navLinks, ...guestLinks];
+  } else if (auth.role === "user") {
+    navLinks = [...navLinks, ...userLinks, ...guestLinks];
+  } else if (auth.role === "admin") {
+    navLinks = [...navLinks, ...adminLinks, ...guestLinks];
+  }
 
   return (
-    <>
-      <div className="antialiased bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400">
-        <header>
-          <nav className="flex flex-wrap items-center justify-between w-full py-4 md:py-0 px-4 text-lg text-gray-700 bg-white">
-            <div>logo</div>
-            <div
-              className="hidden w-full md:flex md:items-center md:w-auto"
-              id="menu"
-            >
-              <ul className="pt-4 text-base text-gray-700 md:flex md:justify-between md:pt-0">
-                <li>
-                  <Link
-                    to="/admin/dashboard"
-                    className="md:p-4 py-2 block hover:text-[var(--primary-color)]"
-                  >
-                    Admin
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/user/dashboard"
-                    className="md:p-4 py-2 block hover:text-[var(--primary-color)]"
-                  >
-                    User
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/authentication/signin"
-                    className="md:p-4 py-2 block hover:text-[var(--primary-color)]"
-                  >
-                    Sign In
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/authentication/signup"
-                    className="md:p-4 py-2 block hover:text-[var(--primary-color)]"
-                  >
-                    Sign Up
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </header>
-      </div>
-    </>
+    <div className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+      <nav className="bg-white shadow-md px-6 py-4 flex items-center justify-between z-50 relative">
+        <div className="text-2xl font-extrabold text-gray-800">
+          Euronext App
+        </div>
+
+        <button className="md:hidden focus:outline-none" onClick={toggleMenu}>
+          <span className="text-3xl text-gray-800">&#9776;</span>
+        </button>
+
+        <ul
+          className={`flex-col md:flex-row md:flex gap-6 text-gray-700 font-medium absolute md:static top-[64px] left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none transition-all duration-300 ease-in-out
+          ${isMenuOpen ? "flex p-4" : "hidden md:flex"}`}
+        >
+          {navLinks.map((link, idx) => (
+            <li key={idx}>
+              <Link
+                to={link.to}
+                className="block py-2 px-3 rounded hover:bg-indigo-100 md:hover:bg-transparent hover:text-indigo-600 transition duration-200"
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
   );
 };
 
