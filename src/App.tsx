@@ -1,32 +1,46 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-import Home from "./pages/General/Home";
-import AboutUs from "./pages/General/AboutUs";
+// General Pages
+const Home = lazy(() => import("./pages/General/Home"));
+const AboutUs = lazy(() => import("./pages/General/AboutUs"));
 
-import UserDashboard from "./pages/user/UserDashboard";
-import UserDashboardDetails from "./pages/user/UserDashboardDetails";
-import AddProspects from "./pages/admin/AddProspects";
-import EditProspectDectails from "./pages/user/EditProspectDetails";
+// User Pages
+const UserDashboard = lazy(() => import("./pages/user/UserDashboard"));
+const UserDashboardDetails = lazy(
+  () => import("./pages/user/UserDashboardDetails")
+);
+const AddProspects = lazy(() => import("./pages/admin/AddProspects"));
+const EditProspectDetails = lazy(
+  () => import("./pages/user/EditProspectDetails")
+);
+const AddProspectsByExcel = lazy(
+  () => import("./pages/admin/AddProspectsByExcel")
+);
+const NominalList = lazy(() => import("./pages/user/NominalList"));
+const ProspectsDetails = lazy(() => import("./pages/user/ProspectsDetails"));
 
-import AddProspectsByExcel from "./pages/admin/AddProspectsByExcel";
-import NominalList from "./pages/user/NominalList";
-import ProspectsDetails from "./pages/user/ProspectsDetails";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import AdminDashboardDetails from "./pages/admin/AdminDashboardDetails";
-import AddAdmin from "./pages/admin/AddAdmin";
-import AdminDetails from "./pages/admin/AdminDetails";
-import UserDetails from "./pages/admin/UserDetails";
+// Admin Pages
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
+const AdminDashboardDetails = lazy(
+  () => import("./pages/admin/AdminDashboardDetails")
+);
+const AddAdmin = lazy(() => import("./pages/admin/AddAdmin"));
+const AdminDetails = lazy(() => import("./pages/admin/AdminDetails"));
+const UserDetails = lazy(() => import("./pages/admin/UserDetails"));
 
-import SignUp from "./pages/authentication/SignUp";
-import SignIn from "./pages/authentication/SignIn";
+// Auth Pages
+const SignUp = lazy(() => import("./pages/authentication/SignUp"));
+const SignIn = lazy(() => import("./pages/authentication/SignIn"));
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <Navbar />
+    <BrowserRouter>
+      <Navbar />
+      <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<AboutUs />} />
@@ -37,7 +51,6 @@ function App() {
             <Route path="signup" element={<SignUp />} />
           </Route>
 
-          {/* Admin routes with AdminDashboard as parent layout */}
           <Route path="/admin" element={<AdminDashboard />}>
             <Route path="dashboard" element={<AdminDashboardDetails />} />
             <Route path="add-admin" element={<AddAdmin />} />
@@ -55,15 +68,16 @@ function App() {
             <Route path="prospects-details" element={<ProspectsDetails />} />
             <Route
               path="edit-prospect-details/:id"
-              element={<EditProspectDectails />}
+              element={<EditProspectDetails />}
             />
             <Route path="nominal-list" element={<NominalList />} />
           </Route>
+
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
-        <Footer />
-      </BrowserRouter>
-    </>
+      </Suspense>
+      <Footer />
+    </BrowserRouter>
   );
 }
 
