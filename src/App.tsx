@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
+import Home from "./pages/General/Home";
+import AboutUs from "./pages/General/AboutUs";
+
 import UserDashboard from "./pages/user/UserDashboard";
 import UserDashboardDetails from "./pages/user/UserDashboardDetails";
 import AddProspects from "./pages/admin/AddProspects";
@@ -25,16 +28,8 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route
-            path="/home"
-            element={
-              <h2 className="text-center mt-10">Welcome to Home Page</h2>
-            }
-          />
-          <Route
-            path="/about"
-            element={<h2 className="text-center mt-10">About Us</h2>}
-          />
+          <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<AboutUs />} />
 
           <Route path="/" element={<SignIn />} />
           <Route path="/authentication">
