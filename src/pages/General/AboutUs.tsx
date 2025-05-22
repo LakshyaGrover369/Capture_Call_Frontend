@@ -16,7 +16,7 @@ const AboutUs: React.FC = () => {
           </h2>
           <div className="w-24 h-1.5 bg-gradient-to-r from-blue-400 to-purple-500 mx-auto mb-8 rounded-full"></div>
           <p className="text-xl md:text-2xl leading-relaxed max-w-4xl mx-auto">
-            Euronext App transforms volunteer management with{" "}
+            Connect HQ transforms volunteer management with{" "}
             <span className="font-semibold text-blue-200">intuitive tools</span>{" "}
             for batch coordination, real-time tracking, and insightful
             analytics. Designed to bring{" "}

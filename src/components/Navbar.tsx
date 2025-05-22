@@ -52,9 +52,7 @@ const Navbar = () => {
   return (
     <div className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
       <nav className="bg-white shadow-md px-6 py-4 flex items-center justify-between z-50 relative">
-        <div className="text-2xl font-extrabold text-gray-800">
-          Euronext App
-        </div>
+        <div className="text-2xl font-extrabold text-gray-800">Connect HQ</div>
 
         <button className="md:hidden focus:outline-none" onClick={toggleMenu}>
           <span className="text-3xl text-gray-800">&#9776;</span>

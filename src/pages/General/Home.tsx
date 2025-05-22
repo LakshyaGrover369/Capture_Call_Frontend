@@ -49,7 +49,7 @@ const Home = () => {
       <section className="h-screen flex flex-col-reverse md:flex-row items-center justify-between px-10 bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 text-white">
         <div className="max-w-xl">
           <h1 className="text-5xl font-extrabold leading-tight">
-            Welcome to Euronext App
+            Welcome to Connect HQ
           </h1>
           <p className="mt-4 text-lg text-blue-100">
             Manage prospects, admins, and user insights easily. Get real-time
