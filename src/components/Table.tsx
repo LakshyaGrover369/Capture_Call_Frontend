@@ -55,7 +55,7 @@ const Table: React.FC<TableProps> = ({
       {searchable && (
         <div className="mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
           <select
-            className="p-2 border border-gray-300 rounded-lg shadow-sm text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-2 sm:p-3 border border-gray-300 rounded-lg shadow-sm text-sm  w-full sm:w-[50%] text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={searchColumn}
             onChange={(e) => setSearchColumn(e.target.value)}
           >
@@ -73,7 +73,7 @@ const Table: React.FC<TableProps> = ({
           <input
             type="text"
             placeholder="Type to search..."
-            className="p-2 border border-gray-300 rounded-lg shadow-sm text-sm w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-2 sm:p-3 border border-gray-300 rounded-lg shadow-sm text-sm w-full sm:w-[50%] focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
           />

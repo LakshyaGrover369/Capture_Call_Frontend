@@ -23,10 +23,10 @@ const AdminDashboard = () => {
       {/* Sidebar */}
       <div
         className={`${
-          isSidebarOpen ? "w-64" : "w-20"
+          isSidebarOpen ? "w-64" : "w-14 sm:w-20"
         } bg-gradient-to-b from-blue-600 via-blue-500 to-blue-400 text-white transition-all duration-500 shadow-lg`}
       >
-        <div className="flex items-center justify-between p-4 border-b border-blue-300">
+        <div className="flex items-center justify-between p-3 sm:p-4 border-b border-blue-300">
           <h2 className={`${!isSidebarOpen && "hidden"} text-2xl font-bold`}>
             Admin Panel
           </h2>
@@ -43,7 +43,7 @@ const AdminDashboard = () => {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center px-4 py-3 mx-2 rounded-lg transition-all duration-300
+              className={`flex items-center px-2 sm:px-4 py-3 mx-2 rounded-lg transition-all duration-300
     ${
       location.pathname === item.path
         ? "bg-[#F3F4F6] text-blue-600 mr-[-6px]"
@@ -51,15 +51,18 @@ const AdminDashboard = () => {
     }`}
             >
               <span className="text-xl mr-3">{item.icon}</span>
-              <span
-                className={`text-md font-medium transition-opacity duration-300 ${
-                  !isSidebarOpen
-                    ? "opacity-0 w-0 overflow-hidden"
-                    : "opacity-100"
-                }`}
-              >
-                {item.label}
-              </span>
+
+              {isSidebarOpen && (
+                <span
+                  className={`text-md font-medium transition-opacity duration-300 ${
+                    !isSidebarOpen
+                      ? "opacity-0 w-0 overflow-hidden"
+                      : "opacity-100"
+                  }`}
+                >
+                  {item.label}
+                </span>
+              )}
             </Link>
           ))}
         </nav>

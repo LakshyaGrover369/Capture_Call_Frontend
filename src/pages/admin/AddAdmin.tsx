@@ -58,7 +58,7 @@ const AddAdmin = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className=" w-full sm:p-4">
       <SubHeading className="text-center" text="Add New Admin" />
       <Form
         inputs={formInputs}

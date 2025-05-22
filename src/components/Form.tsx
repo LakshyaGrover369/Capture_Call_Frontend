@@ -84,7 +84,7 @@ const Form: React.FC<FormProps> = ({
   };
 
   return (
-    <div className="w-full p-4 sm:p-6">
+    <div className="w-full  sm:p-6">
       <form
         onSubmit={handleSubmit}
         encType="multipart/form-data"
@@ -125,11 +125,6 @@ const Form: React.FC<FormProps> = ({
                       </option>
                     ))}
                   </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                    </svg>
-                  </div>
                 </div>
               ) : input.type === "file" ? (
                 <div className="flex items-center justify-center w-full">

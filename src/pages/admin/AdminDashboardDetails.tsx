@@ -2,6 +2,9 @@ import DashboardCard from "../../components/DashboardCard";
 import PieChart from "../../components/PieChart";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import total_prospects from "../../assets/svg/total_prospects.svg";
+import regular_users from "../../assets/images/regular_users.png";
+import admin from "../../assets/images/admin.png";
 import CallingLoader from "../../assets/loaders/CallingLoader.gif";
 
 const DashboardDetails = () => {
@@ -87,39 +90,43 @@ const DashboardDetails = () => {
   ];
 
   return (
-    <div className="flex flex-wrap gap-3">
-      <div className="flex-1 min-w-[calc(30%-0.75rem)]">
-        <DashboardCard
-          title="Total Users"
-          count={dashboardData.totalUsers}
-          imageSrc="/icons/users.svg"
-          bgColor="bg-blue-500"
-        />
-      </div>
-      <div className="flex-1 min-w-[calc(30%-0.75rem)]">
-        <DashboardCard
-          title="Total Admins"
-          count={dashboardData.totalAdmins}
-          imageSrc="/icons/admins.svg"
-          bgColor="bg-green-500"
-        />
-      </div>
-      <div className="flex-1 min-w-[calc(30%-0.75rem)]">
-        <DashboardCard
-          title="Total Regular Users"
-          count={dashboardData.totalRegularUsers}
-          imageSrc="/icons/regular-users.svg"
-          bgColor="bg-yellow-500"
-        />
-      </div>
-      {pieChartData.map((chart, index) => (
-        <div key={index} className="flex-1 min-w-[calc(30%-0.75rem)]">
-          <PieChart
-            data={chart.data}
-            options={{ title: chart.title, is3D: true }}
+    <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <div className="">
+          <DashboardCard
+            title="Total Users"
+            count={dashboardData.totalUsers}
+            imageSrc={total_prospects}
+            bgColor="bg-blue-500"
           />
         </div>
-      ))}
+        <div className="">
+          <DashboardCard
+            title="Total Admins"
+            count={dashboardData.totalAdmins}
+            imageSrc={admin}
+            bgColor="bg-green-500"
+          />
+        </div>
+        <div className="">
+          <DashboardCard
+            title="Total Regular Users"
+            count={dashboardData.totalRegularUsers}
+            imageSrc={regular_users}
+            bgColor="bg-yellow-500"
+          />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-6">
+        {pieChartData.map((chart, index) => (
+          <div key={index} className="">
+            <PieChart
+              data={chart.data}
+              options={{ title: chart.title, is3D: true }}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
