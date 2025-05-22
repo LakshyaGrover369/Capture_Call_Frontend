@@ -16,7 +16,7 @@ const UserDashboard = () => {
       {/* Sidebar */}
       <div
         className={`${
-          isSidebarOpen ? "w-64" : "w-20"
+          isSidebarOpen ? "w-64" : "w-14"
         } bg-gradient-to-b from-blue-600 via-blue-500 to-blue-400 text-white transition-all duration-500 shadow-lg`}
       >
         <div className="flex items-center justify-between p-4 border-b border-blue-300">
@@ -60,7 +60,7 @@ const UserDashboard = () => {
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto relative z-10">
-        <div className="p-6">
+        <div className="p-3">
           <Outlet />
         </div>
       </div>

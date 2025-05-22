@@ -9,6 +9,16 @@
   --Btn-color: rgb(33, 188, 255); /* Primary buttons */
   --Btn-hover: rgb(25, 160, 230); /* Slightly deeper hover */
 }
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+}
+
 /* Add to your CSS: */
 @keyframes particleAnimation {
   to {

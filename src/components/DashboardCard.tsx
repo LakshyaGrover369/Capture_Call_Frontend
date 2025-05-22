@@ -14,20 +14,24 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
   bgColor,
 }) => {
   return (
-    <div className="w-full px-2">
-      <div className="relative h-[160px] rounded-3xl p-5 bg-gradient-to-br from-white via-gray-50 to-gray-100 shadow-xl hover:shadow-2xl transition duration-300 ease-in-out">
+    <div className="w-full md:px-2">
+      <div className="relative h-[100px] sm:h-[160px] rounded-3xl p-3 sm:p-4 bg-gradient-to-br from-white via-gray-50 to-gray-100 shadow-xl hover:shadow-2xl transition duration-300 ease-in-out">
         <div className="flex items-center justify-between h-full">
-          <div className="space-y-2">
-            <p className="text-lg text-gray-600 font-semibold">{title}</p>
-            <h2 className="text-5xl font-extrabold text-gray-800">{count}</h2>
+          <div className="sm:space-y--2">
+            <p className="sm:text-sm md:text-lg text-gray-600 font-semibold">
+              {title}
+            </p>
+            <h2 className=" text-2xl sm:text-4xl md:text-5xl  font-extrabold text-gray-800">
+              {count}
+            </h2>
           </div>
           <div
-            className={`rounded-xl p-4 flex justify-center items-center shadow-md ${bgColor}`}
+            className={`sm:w-20 sm:h-20 rounded-xl p-4 flex justify-center items-center shadow-md ${bgColor}`}
           >
             <img
               src={imageSrc}
               alt={title}
-              className="w-10 h-10 object-contain"
+              className=" w-6 h-6 sm:w-12 sm:h-12 lg:w-20 lg:h-20 object-contain"
             />
           </div>
         </div>

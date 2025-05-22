@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import SubHeading from "../../components/SubHeading";
 import total_prospects from "../../assets/svg/total_prospects.svg";
+import Pending_Users from "../../assets/images/user-pending.png";
+import Callback_Users from "../../assets/images/callback.png";
 import CallingLoader from "../../assets/loaders/CallingLoader.gif";
 
 const UserDashboardDetails = () => {
@@ -70,8 +72,8 @@ const UserDashboardDetails = () => {
   return (
     <div className="relative min-h-[300px] p-4 md:p-6 bg-gray-50">
       {!dashboardData && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 z-10 rounded-xl">
-          <img src={CallingLoader} alt="Loading..." className="w-20 h-20" />
+        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 rounded-xl">
+          <img src={CallingLoader} alt="Loading..." className="w-12 h-12" />
         </div>
       )}
 
@@ -87,19 +89,19 @@ const UserDashboardDetails = () => {
             <DashboardCard
               title="Total Prospects"
               count={dashboardData.totalProspects}
-              imageSrc={total_prospects} // Recommended icon
+              imageSrc={total_prospects}
               bgColor="bg-gradient-to-br from-indigo-500 to-purple-600"
             />
             <DashboardCard
               title="Yet To Call"
               count={dashboardData.prospectsWithCallResultNull}
-              imageSrc="/icons/phone-missed.svg" // Recommended icon
+              imageSrc={Pending_Users}
               bgColor="bg-gradient-to-br from-rose-500 to-pink-600"
             />
             <DashboardCard
               title="Callback Needed"
               count={dashboardData.prospectsWithCallResultCallback}
-              imageSrc="/icons/phone-callback.svg" // Recommended icon
+              imageSrc={Callback_Users}
               bgColor="bg-gradient-to-br from-amber-500 to-orange-600"
             />
           </div>
