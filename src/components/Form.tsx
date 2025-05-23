@@ -38,18 +38,124 @@ const Form: React.FC<FormProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isButtonHovered, setIsButtonHovered] = useState(false);
 
+  const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
+
+  // Basic validation functions
+  const validateField = (name: string, value: any) => {
+    let error = "";
+
+    if (inputs) {
+      const input = inputs.find((inp) => inp.name === name);
+      if (!input) return "";
+
+      // Required validation
+      if (input.required && (!value || value === "")) {
+        return "This field is required";
+      }
+
+      // Name validation
+      if (name.toLowerCase().includes("name")) {
+        if (typeof value === "string" && value.trim().length < 3) {
+          return "Name must be at least 3 characters";
+        }
+      }
+
+      // Email validation
+      if (name.toLowerCase().includes("email")) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+          return "Invalid email address";
+        }
+      }
+
+      // Phone validation
+      if (
+        name.toLowerCase().includes("phone") ||
+        name.toLowerCase().includes("mobile")
+      ) {
+        const phoneRegex = /^[6-9]\d{9}$/;
+        if (!phoneRegex.test(value)) {
+          return "Invalid phone number";
+        }
+      }
+
+      // Password validation
+      if (name === "password") {
+        if (typeof value === "string" && value.length < 8) {
+          return "Password must be at least 8 characters";
+        }
+      }
+
+      // Confirm password validation
+      if (name === "confirmPassword" || name === "confirm_password") {
+        if (typeof value === "string" && value.length < 8) {
+          return "Confirm Password must be at least 8 characters";
+        }
+        if (value !== formData["password"]) {
+          return "Passwords do not match";
+        }
+      }
+
+      // Aadhaar validation
+      if (
+        name.toLowerCase().includes("aadhaar") ||
+        name.toLowerCase().includes("aadhar")
+      ) {
+        const aadhaarRegex = /^\d{12}$/;
+        if (!aadhaarRegex.test(value)) {
+          return "Invalid Aadhaar number";
+        }
+      }
+    }
+
+    return error;
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value, files, type } = e.target as HTMLInputElement;
+    const fieldValue = type === "file" && files ? files[0] : value;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "file" && files ? files[0] : value,
+      [name]: fieldValue,
     }));
+
+    // Validate on change
+    const error = validateField(name, fieldValue);
+    setFormErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }));
+  };
+
+  const validateForm = () => {
+    let valid = true;
+    let errors: { [key: string]: string } = {};
+
+    inputs.forEach((input) => {
+      const value = formData[input.name];
+      const error = validateField(input.name, value);
+      if (error) valid = false;
+      errors[input.name] = error;
+    });
+
+    setFormErrors(errors);
+    return valid;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      // If there are errors, alert them and return
+      const errorMessages = Object.values(formErrors).filter(Boolean);
+      if (errorMessages.length > 0) {
+        alert(errorMessages.join("\n"));
+      }
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const token = localStorage.getItem("token");
@@ -68,6 +174,7 @@ const Form: React.FC<FormProps> = ({
       console.log(response.data);
       if (onSubmitSuccess) onSubmitSuccess();
       setFormData({});
+      setFormErrors({});
     } catch (error) {
       if (onSubmitError) onSubmitError(error);
       console.error("Form submission error:", error);
