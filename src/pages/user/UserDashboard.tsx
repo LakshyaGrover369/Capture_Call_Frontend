@@ -41,9 +41,11 @@ const UserDashboard = () => {
             className="text-white focus:outline-none transform transition-all duration-500 ease-in-out hover:scale-125 hover:rotate-360 active:scale-95 pr-3 "
           >
             {isSidebarOpen ? (
-              <RxCross1 className="hover:scale-110 duration-500 " />
+              <div className="ml-[60px] sm:ml-0 sm:m-0 ">
+                <RxCross1 className="" />
+              </div>
             ) : (
-              <HiOutlineMenuAlt1 className="hover:scale-110 duration-500 " />
+              <HiOutlineMenuAlt1 className="" />
             )}
           </button>
         </div>

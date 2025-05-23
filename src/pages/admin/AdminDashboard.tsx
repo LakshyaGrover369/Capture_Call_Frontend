@@ -8,6 +8,7 @@ import { MdDashboard } from "react-icons/md";
 import { FaFileExcel } from "react-icons/fa6";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { RxCross1 } from "react-icons/rx";
+import { div } from "framer-motion/client";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -55,7 +56,9 @@ const AdminDashboard = () => {
             className="text-white focus:outline-none transform transition-all duration-500 ease-in-out hover:scale-125 hover:rotate-360 active:scale-95 pr-3 "
           >
             {isSidebarOpen ? (
-              <RxCross1 className="hover:scale-110 duration-500 " />
+              <div className="ml-[60px] sm:ml-0 sm:m-0 ">
+                <RxCross1 className=" " />
+              </div>
             ) : (
               <HiOutlineMenuAlt1 className="hover:scale-110 duration-500" />
             )}
