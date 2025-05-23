@@ -8,7 +8,6 @@ import { MdDashboard } from "react-icons/md";
 import { FaFileExcel } from "react-icons/fa6";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { RxCross1 } from "react-icons/rx";
-import { div } from "framer-motion/client";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
