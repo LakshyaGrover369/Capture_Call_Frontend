@@ -1,47 +1,28 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import admin_management from "../../assets/images/admin_management.png";
+import bulk_upload from "../../assets/images/bulk_upload.png";
+import real_time_insights from "../../assets/images/real_time_insights.png";
 
 const Home = () => {
-  const removeWatermark = (): void => {
-    const splineDiv = document.querySelector(
-      "#splineDiv"
-    ) as HTMLElement | null;
-
-    if (splineDiv) {
-      const iframe = splineDiv.querySelector(
-        "iframe"
-      ) as HTMLIFrameElement | null;
-
-      if (iframe) {
-        iframe.addEventListener("load", () => {
-          try {
-            const iframeDoc =
-              iframe.contentDocument ||
-              (iframe.contentWindow ? iframe.contentWindow.document : null);
-
-            if (iframeDoc) {
-              const watermark = iframeDoc.querySelector(
-                ".spline-watermark"
-              ) as HTMLElement | null;
-
-              if (watermark) {
-                watermark.style.display = "none";
-                console.log("Watermark hidden");
-              }
-            }
-          } catch (err) {
-            console.warn("Cross-origin iframe: cannot remove watermark", err);
-          }
-        });
-      }
-    }
-  };
+  const [dashboardLink, setDashboardLink] = useState<string>("");
 
   useEffect(() => {
-    removeWatermark();
+    const authInfoStr = localStorage.getItem("authInfo");
+    if (authInfoStr) {
+      try {
+        const authInfo = JSON.parse(authInfoStr);
+        const isAuthenticated = authInfo?.isAuthenticated;
+        const role = authInfo?.role;
+        if (isAuthenticated && role === "admin") {
+          setDashboardLink("/admin/dashboard");
+        }
+      } catch (e) {
+        // Invalid JSON or missing fields
+      }
+    }
   }, []);
-
-  // Call the function on page load
-  window.addEventListener("DOMContentLoaded", removeWatermark);
 
   return (
     <main className="font-sans">
@@ -56,12 +37,18 @@ const Home = () => {
             dashboards with gender-based breakdowns, role statistics, and more.
           </p>
           <div className="mt-6 flex space-x-4">
-            <button className="px-6 py-3 bg-white text-blue-700 font-semibold rounded-xl shadow hover:bg-blue-100 transition">
+            <Link
+              to={"/authentication/signin"}
+              className="px-6 py-3 bg-white text-blue-700 font-semibold rounded-xl shadow hover:bg-blue-100 transition"
+            >
               Get Started
-            </button>
-            <button className="px-6 py-3 border border-white rounded-xl hover:bg-white hover:text-blue-600 transition">
+            </Link>
+            <Link
+              to={"/about"}
+              className="px-6 py-3 border border-white rounded-xl hover:bg-white hover:text-blue-600 transition"
+            >
               Learn More
-            </button>
+            </Link>
           </div>
         </div>
         <div className="w-full md:w-1/2 h-[400px] md:h-[500px]">
@@ -86,7 +73,7 @@ const Home = () => {
         <div className="grid md:grid-cols-3 gap-8 text-center">
           <div className="p-6 bg-blue-50 rounded-2xl shadow hover:shadow-md transition">
             <img
-              src="/icons/admin.svg"
+              src={admin_management}
               className="mx-auto h-12 mb-4"
               alt="Admin"
             />
@@ -100,7 +87,7 @@ const Home = () => {
           </div>
           <div className="p-6 bg-blue-50 rounded-2xl shadow hover:shadow-md transition">
             <img
-              src="/icons/chart.svg"
+              src={real_time_insights}
               className="mx-auto h-12 mb-4"
               alt="Chart"
             />
@@ -113,11 +100,7 @@ const Home = () => {
             </p>
           </div>
           <div className="p-6 bg-blue-50 rounded-2xl shadow hover:shadow-md transition">
-            <img
-              src="/icons/excel.svg"
-              className="mx-auto h-12 mb-4"
-              alt="Excel"
-            />
+            <img src={bulk_upload} className="mx-auto h-12 mb-4" alt="Excel" />
             <h3 className="text-xl font-semibold text-blue-700">Bulk Upload</h3>
             <p className="text-gray-600 mt-2">
               Import large datasets via Excel and automate prospect onboarding.
@@ -135,9 +118,12 @@ const Home = () => {
           Start managing users and get instant analytics right from your
           dashboard.
         </p>
-        <button className="bg-white text-blue-700 px-8 py-3 rounded-xl font-semibold hover:bg-blue-100 transition">
+        <Link
+          to={dashboardLink ?? alert("you are not an admin")}
+          className="bg-white text-blue-700 px-8 py-3 rounded-xl font-semibold hover:bg-blue-100 transition"
+        >
           Go to Dashboard
-        </button>
+        </Link>
       </section>
     </main>
   );

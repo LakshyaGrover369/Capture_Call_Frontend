@@ -1,20 +1,40 @@
 import { useState } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
+import { BiSolidUserDetail } from "react-icons/bi";
+import { RiAdminFill } from "react-icons/ri";
+import { IoIosPersonAdd } from "react-icons/io";
+import { TiUserAdd } from "react-icons/ti";
+import { MdDashboard } from "react-icons/md";
+import { FaFileExcel } from "react-icons/fa6";
+import { HiOutlineMenuAlt1 } from "react-icons/hi";
+import { RxCross1 } from "react-icons/rx";
 
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const location = useLocation();
 
   const menuItems = [
-    { path: "/admin/dashboard", label: "Dashboard", icon: "📊" },
-    { path: "/admin/add-admin", label: "Add Admin", icon: "👥" },
-    { path: "/admin/user-details", label: "User Details", icon: "📋" },
-    { path: "/admin/admin-details", label: "Admin Details", icon: "👤" },
-    { path: "/admin/add-prospects", label: "Add Prospects", icon: "➕" },
+    { path: "/admin/dashboard", label: "Dashboard", icon: <MdDashboard /> },
+    { path: "/admin/add-admin", label: "Add Admin", icon: <IoIosPersonAdd /> },
+    {
+      path: "/admin/user-details",
+      label: "User Details",
+      icon: <BiSolidUserDetail />,
+    },
+    {
+      path: "/admin/admin-details",
+      label: "Admin Details",
+      icon: <RiAdminFill />,
+    },
+    {
+      path: "/admin/add-prospects",
+      label: "Add Prospects",
+      icon: <TiUserAdd />,
+    },
     {
       path: "/admin/add-prospects-excel",
       label: "Add Prospects By Excel",
-      icon: "📄",
+      icon: <FaFileExcel />,
     },
   ];
 
@@ -26,15 +46,19 @@ const AdminDashboard = () => {
           isSidebarOpen ? "w-64" : "w-14 sm:w-20"
         } bg-gradient-to-b from-blue-600 via-blue-500 to-blue-400 text-white transition-all duration-500 shadow-lg`}
       >
-        <div className="flex items-center justify-between p-3 sm:p-4 border-b border-blue-300">
+        <div className="flex items-center justify-center sm:justify-between p-3 sm:p-4 border-b border-blue-300 m-auto">
           <h2 className={`${!isSidebarOpen && "hidden"} text-2xl font-bold`}>
             Admin Panel
           </h2>
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="text-white focus:outline-none hover:scale-110 transition"
+            className="text-white focus:outline-none transform transition-all duration-500 ease-in-out hover:scale-125 hover:rotate-360 active:scale-95 pr-3 "
           >
-            {isSidebarOpen ? "◀" : "▶"}
+            {isSidebarOpen ? (
+              <RxCross1 className="hover:scale-110 duration-500 " />
+            ) : (
+              <HiOutlineMenuAlt1 className="hover:scale-110 duration-500" />
+            )}
           </button>
         </div>
 

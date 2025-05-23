@@ -1,14 +1,27 @@
 import { useState } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
+import { MdDashboard } from "react-icons/md";
+import { FaUsers } from "react-icons/fa6";
+import { FaUserCheck } from "react-icons/fa";
+import { HiOutlineMenuAlt1 } from "react-icons/hi";
+import { RxCross1 } from "react-icons/rx";
 
 const UserDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const location = useLocation();
 
   const menuItems = [
-    { path: "/user/dashboard", label: "Dashboard", icon: "📊" },
-    { path: "/user/prospects-details", label: "Prospects Details", icon: "👥" },
-    { path: "/user/nominal-list", label: "Nominal List", icon: "📋" },
+    { path: "/user/dashboard", label: "Dashboard", icon: <MdDashboard /> },
+    {
+      path: "/user/prospects-details",
+      label: "Prospects Details",
+      icon: <FaUsers />,
+    },
+    {
+      path: "/user/nominal-list",
+      label: "Nominal List",
+      icon: <FaUserCheck />,
+    },
   ];
 
   return (
@@ -25,9 +38,13 @@ const UserDashboard = () => {
           </h2>
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="text-white focus:outline-none hover:scale-110 transition"
+            className="text-white focus:outline-none transform transition-all duration-500 ease-in-out hover:scale-125 hover:rotate-360 active:scale-95 pr-3 "
           >
-            {isSidebarOpen ? "◀" : "▶"}
+            {isSidebarOpen ? (
+              <RxCross1 className="hover:scale-110 duration-500 " />
+            ) : (
+              <HiOutlineMenuAlt1 className="hover:scale-110 duration-500 " />
+            )}
           </button>
         </div>
 
