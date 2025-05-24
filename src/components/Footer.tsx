@@ -22,10 +22,6 @@ const Footer = () => {
               Comprehensive web platform for administering sewadar volunteers
               with call tracking, batch management, and reporting capabilities.
             </p>
-            <div className="flex items-center text-sm">
-              <FaLanguage className="mr-2" />
-              <span>Supported Languages: English | हिंदी</span>
-            </div>
           </div>
 
           {/* Core Features */}
@@ -79,9 +75,17 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <div className="border-t border-gray-700 pt-4 text-center text-xs text-gray-400">
-          <p>© {new Date().getFullYear()} Sewadar Call Management System</p>
+          <p>© {new Date().getFullYear()} Connect HQ</p>
           <p className="mt-1">
-            Designed for volunteer administration and batch management
+            Connect with developer?{" "}
+            <a
+              href="https://groverlakshya.netlify.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:underline"
+            >
+              Visit Lakshya Grover's Portfolio
+            </a>
           </p>
           <p className="mt-1">
             Developed by{" "}

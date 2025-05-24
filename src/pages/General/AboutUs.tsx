@@ -115,7 +115,16 @@ const AboutUs: React.FC = () => {
           <div className="w-16 h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 mx-auto my-4 rounded-full"></div>
           <p className="font-medium text-blue-200">
             Developed with <span className="text-red-400">❤️</span> by{" "}
-            <span className="font-bold text-white">Lakshya Grover</span>
+            <span className="font-bold text-white">
+              <a
+                href="https://groverlakshya.netlify.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-whit-400 hover:underline"
+              >
+                Lakshya Grover
+              </a>
+            </span>
           </p>
         </div>
       </div>

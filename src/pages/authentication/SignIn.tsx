@@ -99,14 +99,14 @@ const SignIn = () => {
                 />
               </div>
 
-              <div className="flex items-center justify-between">
+              {/* <div className="flex items-center justify-between">
                 <Link
                   to="/authentication/forgot-password"
                   className="text-sm text-white/70 hover:text-white transition-colors"
                 >
                   Forgot password?
                 </Link>
-              </div>
+              </div> */}
 
               <button
                 type="submit"
