@@ -7,7 +7,7 @@ import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { RxCross1 } from "react-icons/rx";
 
 const UserDashboard = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
 
   const menuItems = [
@@ -41,11 +41,11 @@ const UserDashboard = () => {
             className="text-white focus:outline-none transform transition-all duration-500 ease-in-out hover:scale-125 hover:rotate-360 active:scale-95 pr-3 "
           >
             {isSidebarOpen ? (
-              <div className="ml-[60px] sm:ml-0 sm:m-0 ">
+              <div className=" sm:m-0 ">
                 <RxCross1 className="" />
               </div>
             ) : (
-              <HiOutlineMenuAlt1 className="" />
+              <HiOutlineMenuAlt1 className="ml-1 sm:ml-0" />
             )}
           </button>
         </div>

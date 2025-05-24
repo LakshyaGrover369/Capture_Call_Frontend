@@ -6,7 +6,9 @@ import bulk_upload from "../../assets/images/bulk_upload.png";
 import real_time_insights from "../../assets/images/real_time_insights.png";
 
 const Home = () => {
-  const [dashboardLink, setDashboardLink] = useState<string>("");
+  const [dashboardLink, setDashboardLink] = useState<string>(
+    "/authentication/signin"
+  );
 
   useEffect(() => {
     const authInfoStr = localStorage.getItem("authInfo");
@@ -27,7 +29,7 @@ const Home = () => {
   return (
     <main className="font-sans">
       {/* Hero Section */}
-      <section className="h-screen flex flex-col-reverse md:flex-row items-center justify-between px-10 bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 text-white">
+      <section className="h-screen flex flex-col-reverse md:flex-row items-center justify-between pb-[20%] sm:pb-0 px-6 bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 text-white">
         <div className="max-w-xl">
           <h1 className="text-5xl font-extrabold leading-tight">
             Welcome to Connect HQ
@@ -51,8 +53,8 @@ const Home = () => {
             </Link>
           </div>
         </div>
-        <div className="w-full md:w-1/2 h-[400px] md:h-[500px]">
-          <div className="w-full h-full rounded-3xl overflow-hidden transform hover:scale-105 transition duration-700 ease-in-out">
+        <div className="w-[125%] pl-6 sm:pl-0 sm:w-full md:w-1/2 h-[400px] md:h-[500px]">
+          <div className=" w-full h-full rounded-3xl overflow-hidden transform hover:scale-105 transition duration-700 ease-in-out">
             <iframe
               src="https://my.spline.design/genkubgreetingrobot-aDHlZxJUYkcHL1CAJd0nv9ij/"
               frameBorder="0"
